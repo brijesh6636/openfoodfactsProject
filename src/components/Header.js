@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-purple-600 flex flex-wrap justify-between items-center py-2 h-24 md:h-32 px-4 md:px-10 shadow-lg border-b border-gray-300 mb-1">
-      <img className="h-12 w-auto md:h-24" id="logo" src="https://i.postimg.cc/65fgCPgN/Screenshot-152.png" alt="Logo" />
+      <img className="h-12 w-auto md:h-24" id="logo" src="https://static.openfoodfacts.org/images/logos/off-logo-horizontal-light.svg" alt="Logo" />
 
       <ul className="flex items-center space-x-2 md:space-x-4">
         <li>
