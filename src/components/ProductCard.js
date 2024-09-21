@@ -21,28 +21,28 @@ const ProductCard = ({ product }) => {
     <div
       onClick={() => navigate(`/product/${product.id}`)}
       className="cursor-pointer overflow-hidden border border-gray-300 hover:border-blue-600 bg-black text-white
-        max:sm:w-1/2 max:md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-defined hover:shadow-xl"
+         max-sm:w-[150px]  md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 max-lg:m-[5px] rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-defined hover:shadow-xl "
     >
       {/* Product Image */}
       <img
         src={product.image_url || 'https://world.openfoodfacts.org/images/icons/dist/packaging.svg'}
         alt="Product Image"
-        className="w-full h-40 sm:h-44 md:h-48 lg:h-52 object-contain rounded-t-lg mb-4 transition-transform duration-300 transform hover:scale-110"
+        className="w-full h-40 sm:h-44 md:h-48 lg:h-52 object-contain rounded-t-lg rounded-2xl bg-white  mb-4 transition-transform duration-300 transform hover:scale-110"
       />
 
       {/* Product Information */}
       <div className="p-2">
         <h3 className="text-sm sm:text-lg md:text-xl font-bold text-white mb-1 sm:mb-2">{product.product_name}</h3>
 
-        <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-1">
+        <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-1 max-lg:hidden">
           <span className="font-medium text-blue-400">Category:</span> {product.categories || 'N/A'}
         </p>
 
-        <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-2">
-          <span className="font-medium text-blue-400">Ingredients:</span> {cleanedTags.join(', ') || 'N/A'}
+        <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-2 max-lg:hidden">
+          <span className="font-medium text-blue-400 max-lg:hidden">Ingredients:</span> {cleanedTags.join(', ') || 'N/A'}
         </p>
 
-        <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-1">
+        <p className="text-xs sm:text-sm md:text-base text-gray-300 mb-1 max-lg:hidden">
           <span className="font-medium text-blue-400">Nutrient Grade:</span> {product.nutrition_grades?.toUpperCase() || 'N/A'}
         </p>
 

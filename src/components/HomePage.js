@@ -109,7 +109,7 @@ const HomePage = () => {
             {!allProducts.length ? (
                 <Shimmer />
             ) : (
-                <div className="flex flex-wrap justify-between  max-md:w-1/3">
+                <div className="flex flex-wrap justify-between  ">
                     {allProducts.map((product) => (
                         <ProductCard key={product._id} product={product} />
                     ))}

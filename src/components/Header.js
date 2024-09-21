@@ -31,7 +31,7 @@ import { useSelector } from "react-redux";
        
         <li>
         <button
-      className={`m-1 p-2 rounded-lg transition duration-200 text-xs md:text-base  ${
+      className={`m-1 p-2 rounded-lg transition duration-200 text-xs md:text-base max-lg:hidden  ${
         isOnline ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'
       }`}
     >

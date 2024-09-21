@@ -18,7 +18,7 @@ const CategoryFilter = ({ handleCategoryChange }) => {
   }, []);
 
   return (
-    <select onChange={(e) => handleCategoryChange(e.target.value)} className="p-2 m-2 border border-black rounded-lg shadow-lg">
+    <select onChange={(e) => handleCategoryChange(e.target.value)} className="p-2 m-2 border border-black rounded-lg shadow-lg max-md:hidden">
       <option value="">All Categories</option>
       {categories.map((category) => (
         <option key={category.id} value={category.id}>
