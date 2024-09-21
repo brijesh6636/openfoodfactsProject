@@ -30,7 +30,7 @@ const BarcodeSearch = ({ handleBarCodeResult }) => {
     return (
         <div>
             <input
-                className='h-10 p-2 m-2 border border-black rounded-lg shadow-lg'
+                className='h-10 p-2 m-2 border border-black rounded-lg shadow-lg max-lg:hidden'
                 type="text"
                 value={barcode}
                 onChange={handleInputChange}

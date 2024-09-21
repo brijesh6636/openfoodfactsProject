@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { NoProductFound, ShimmerLoader } from '../import';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../ReduxStore/cartSlice';
 
 const ProductDetailsDisplay = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -28,39 +31,42 @@ const ProductDetailsDisplay = () => {
     }, [id]);
 
     if (loading) {
-        return <ShimmerLoader/>; // You can replace this with a loader or a spinner
+        return <ShimmerLoader />; 
     }
 
     if (!product) {
-        return <NoProductFound/>;
+        return <NoProductFound />;
     }
 
     const handleAddToCart = () => {
-        alert(`${product.product_name} added to cart!`);
-        // Logic to add product to cart can be implemented here
+        dispatch(addItem(product));
+
+        const existingCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        const updatedCartItems = [...existingCartItems, product];
+        localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg shadow-lg mt-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Left: Image Section */}
-                <div className="flex justify-center  items-center">
+        <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg shadow-lg mt-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Image Section */}
+                <div className="flex justify-center items-center">
                     <img 
                         src={product.image_url || 'https://world.openfoodfacts.org/images/icons/dist/packaging.svg'}
                         alt={product.product_name}
-                        className="w-[200px] md:max-w-md object-cover rounded-lg shadow-lg transition-transform duration-300 hover:scale-105"
+                        className="w-[250px] max-md:w-[200px] max-sm:w-[150px] md:max-w-md object-cover rounded-lg shadow-lg transition-transform duration-300 hover:scale-defined"
                     />
                 </div>
 
-                {/* Right: Product Details Section */}
-                <div className="p-6">
-                    <h2 className="text-3xl font-extrabold text-blue-800 mb-4">{product.product_name}</h2>
+                {/* Product Details Section */}
+                <div className="p-4 sm:p-6">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-blue-800 mb-4">{product.product_name}</h2>
                     
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">Ingredients:</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-purple-700 mb-2">Ingredients:</h3>
                     <p className="text-gray-700 mb-4">{product.ingredients_text || 'Ingredients not available.'}</p>
 
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">Nutritional Values:</h3>
-                    <ul className="list-disc list-inside text-gray-700 mb-4">
+                    <h3 className="text-lg sm:text-xl font-semibold text-purple-700 mb-2">Nutritional Values:</h3>
+                    <ul className="list-disc list-inside text-gray-700 mb-4 space-y-1">
                         {product.nutriments && (
                             <>
                                 <li>Energy: {product.nutriments['energy-kcal'] || 'N/A'} kcal</li>
@@ -71,11 +77,14 @@ const ProductDetailsDisplay = () => {
                         )}
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-purple-700 mb-2">Labels:</h3>
-                    <div className="flex flex-wrap mb-6">
+                    <h3 className="text-lg sm:text-xl font-semibold text-purple-700 mb-2">Labels:</h3>
+                    <div className="flex flex-wrap gap-2 mb-6">
                         {product.labels ? (
                             product.labels.split(',').map((label, index) => (
-                                <span key={index} className="bg-green-100 text-green-800 text-xs font-semibold mr-2 mb-2 px-3 py-1 rounded-full">
+                                <span 
+                                    key={index} 
+                                    className="bg-green-100 text-green-800 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full"
+                                >
                                     {label}
                                 </span>
                             ))
@@ -88,7 +97,7 @@ const ProductDetailsDisplay = () => {
                     <div className="flex justify-start">
                         <button 
                             onClick={handleAddToCart}
-                            className="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 transform hover:scale-105 active:scale-95"
+                            className="bg-blue-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 ease-in-out hover:bg-blue-700 hover:shadow-lg focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 transform hover:scale-105 active:scale-95"
                         >
                             Add to Cart
                         </button>

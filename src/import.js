@@ -7,6 +7,7 @@ import ProductCard from "./components/ProductCard";
 import BarcodeSearch from "./components/BarCodeSearch";
 import ProductDetailsDisplay from "./components/ProductDetailsDisplay";
 import NoInternetConnection from "./components/NoInternetConnection";
+import Cart from "./components/Cart";
 
 //import from pages
 
@@ -19,5 +20,5 @@ import { ShimmerLoader } from "./pages/ProductShimeer";
 import { NoProductFound } from "./pages/ProductShimeer";
 
 
-export  { HomePage , ProductCard , BarcodeSearch , ProductDetailsDisplay , NoInternetConnection
+export  { HomePage , ProductCard , BarcodeSearch , ProductDetailsDisplay , NoInternetConnection , Cart
     , Header , ErrorBoundary , Error , AboutMe , Shimmer , CategoryFilter , SortFilter , NoProductFound , ShimmerLoader  };

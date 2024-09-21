@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
     <div
       onClick={() => navigate(`/product/${product.id}`)}
       className="cursor-pointer overflow-hidden border border-gray-300 hover:border-blue-600 bg-black text-white
-         max-sm:w-[150px]  md:w-1/3 lg:w-1/4 xl:w-1/5 p-4 m-2 max-lg:m-[5px] rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-defined hover:shadow-xl "
+         max-sm:w-[150px]  md:w-1/4 lg:w-1/4 xl:w-1/5 p-4 m-2 max-lg:m-[5px] rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-defined hover:shadow-xl "
     >
       {/* Product Image */}
       <img

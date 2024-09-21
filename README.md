@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# Food Product Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a web application built using ReactJS that allows users to search, filter, and explore detailed information about food products using the OpenFoodFacts API. The project aims to provide an interactive and responsive UI with a variety of features such as product search, sorting, filtering by category, and more. It includes features like local storage for cart persistence, session management to optimize API calls, and graceful error handling.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### 1. **Homepage:**
+   - Displays a list of food products fetched from the OpenFoodFacts API.
+   - Each product shows essential details: product name, image, category, ingredients, and nutrition grade (A-E).
+   - Pagination is handled via infinite scroll or load more functionality.
 
-### `npm start`
+### 2. **Search Functionality:**
+   - **Name Search**: Users can search products by name using a search bar with debouncing to reduce unnecessary API calls.
+   - **Barcode Search**: Users can also search for products by their barcode.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 3. **Category Filter:**
+   - Users can filter products by categories (e.g., beverages, dairy, snacks).
+   - Categories are dynamically fetched from the OpenFoodFacts API and displayed as a dropdown or side filter.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 4. **Sort Functionality:**
+   - Users can sort products by:
+     - **Product Name**: A-Z or Z-A.
+     - **Nutrition Grade**: Ascending/Descending.
 
-### `npm test`
+### 5. **Product Detail Page:**
+   - On clicking a product, users are redirected to a detailed product page displaying:
+     - Product image
+     - Full list of ingredients
+     - Nutritional values (energy, fat, carbs, proteins)
+     - Labels like vegan, gluten-free, etc.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 6. **Cart:**
+   - Users can add products to the cart.
+   - Cart data persists even after reloads, thanks to local storage.
 
-### `npm run build`
+### 7. **Session-based Data Fetching:**
+   - API calls are optimized within a session to avoid redundant API requests, using Redux and local storage.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 8. **Loading States:**
+   - A shimmer effect is displayed while product data is being fetched to improve user experience.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 9. **Error Handling:**
+   - Includes an `error.js` component to handle invalid paths.
+   - A global error boundary is in place to catch any unforeseen errors in the app and display user-friendly messages.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 10. **Offline Handling:**
+   - A component to notify the user when the internet connection is lost.
 
-### `npm run eject`
+### 11. **Responsive Design:**
+   - The application is fully responsive, ensuring it works seamlessly across devices like mobile, tablet, and desktop.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Technologies Used
+- **Frontend**: ReactJS, Redux
+- **Styling**: TailwindCSS, CSS
+- **Routing**: `react-router-dom`
+- **State Management**: Redux for global state management and local storage for cart persistence.
+- **API**: OpenFoodFacts API for fetching food product data.
+- **Error Handling**: Custom error boundaries and components.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Setup Instructions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1. Clone the repository:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+git clone <https://github.com/bsingh6636/openfoodfactsProject.git>
+cd openfoodfactsProject
+```
 
-## Learn More
+### 2. Install dependencies:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. Start the development server:
 
-### Code Splitting
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. Build for production:
 
-### Analyzing the Bundle Size
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Additional Features
 
-### Making a Progressive Web App
+- **Debouncing for Search**: The search functionality is optimized using debouncing to minimize the number of API requests.
+- **Cart Persistence**: Cart data is stored in local storage, ensuring that items remain in the cart even after a page refresh.
+- **Session-based API Calls**: Data fetched during a session is cached, so subsequent requests within the same session won't trigger additional API calls.
+- **Offline Handling**: Displays a message when the internet connection is lost, improving the user experience during outages.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Error Handling
+- **Invalid Path Handling**: If a user navigates to a wrong URL, an error page is shown (`error.js`).
+- **Global Error Boundary**: Catches unexpected errors across the app and shows a fallback UI.
 
-### Advanced Configuration
+## Time Taken
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Please mention the time taken to complete the project in this section after completing the assignment.
 
-### Deployment
+## Improvements and Future Enhancements
+- Potential improvements could be made in areas such as performance optimization, UI enhancements, or adding more advanced sorting/filtering criteria.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

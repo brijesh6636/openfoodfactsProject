@@ -1,14 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { BarcodeSearch, Shimmer, ProductCard, CategoryFilter, SortFilter } from '../import';
+import { saveToSession, getFromSession, clearSessionData , debounce } from '../helper/storageUtil'; // Import storage utilities
 
 const HomePage = () => {
-    const [allProducts, setAllProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState(getFromSession('products') || []); // Load from session if available
     const [pageNumber, setPageNumber] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
     const [category, setCategory] = useState('');
     const [sortOption, setSortOption] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    console.log(navigator.onLine)
+
+    
+    
+
+    // Debounced search query handling
+    const handleDebouncedSearch = debounce((query) => {
+        setSearchQuery(query);
+    }, 500); // 500ms delay for debouncing
 
     // Fetch products based on the current category and sort options
     const fetchProducts = useCallback(async () => {
@@ -36,7 +44,9 @@ const HomePage = () => {
                 }
             }
 
-            setAllProducts(prevProducts => [...prevProducts, ...products]); // Append new products to the existing list
+            setAllProducts((prevProducts) => [...prevProducts, ...products]); // Append new products to the existing list
+            saveToSession('products', [...allProducts, ...products]); // Save to session storage
+
         } catch (error) {
             console.error("Error fetching products:", error);
         }
@@ -55,6 +65,7 @@ const HomePage = () => {
                 const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${searchQuery}&json=true`);
                 const data = await response.json();
                 setAllProducts(data.products);
+                saveToSession('products', data.products); // Save to session storage
             }
             handleQuery();
         }
@@ -63,7 +74,7 @@ const HomePage = () => {
     // Infinite scroll handler
     const handleScroll = useCallback(() => {
         if (window.innerHeight + document.documentElement.scrollTop + 20 >= document.documentElement.scrollHeight && !isLoading) {
-            setPageNumber(prevPageNumber => prevPageNumber + 1); // Increase page number to load next set of products
+            setPageNumber((prevPageNumber) => prevPageNumber + 1); // Increase page number to load next set of products
         }
     }, [isLoading]);
 
@@ -76,12 +87,14 @@ const HomePage = () => {
     // Handle barcode result
     function handleBarCodeResult(data) {
         setAllProducts(data);
+        saveToSession('products', data); // Save barcode result to session storage
     }
 
     // Handle category change
     const handleCategoryChange = (selectedCategory) => {
         setCategory(selectedCategory);
         setAllProducts([]); // Clear current products to load new ones based on the selected category
+        clearSessionData('products'); // Clear session data on category change
         setPageNumber(1); // Reset page number
     };
 
@@ -89,16 +102,17 @@ const HomePage = () => {
     const handleSortChange = (selectedSort) => {
         setSortOption(selectedSort);
         setAllProducts([]); // Clear current products to apply sorting
+        clearSessionData('products'); // Clear session data on sort change
         setPageNumber(1); // Reset page number
     };
-
+    console.log(searchQuery)
     return (
         <>
             <div className="flex flex-wrap justify-between p-4 max-sm:p-1 max-md:p-2 max-md:w-1/3">
                 <input
                     placeholder="Search products"
                     type="text"
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleDebouncedSearch(e.target.value)} // Use debounced search
                     className="h-10 p-2 m-2 border border-black rounded-lg shadow-lg"
                 />
                 <BarcodeSearch handleBarCodeResult={handleBarCodeResult} />
@@ -122,4 +136,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

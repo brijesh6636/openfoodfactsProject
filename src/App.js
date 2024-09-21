@@ -1,7 +1,7 @@
 
 import { createContext } from 'react';
 import './App.css';
-import { AboutMe, Error, ErrorBoundary, Header, HomePage, NoInternetConnection, ProductDetailsDisplay } from './import';
+import { AboutMe, Cart, Error, ErrorBoundary, Header, HomePage, NoInternetConnection, ProductDetailsDisplay } from './import';
 import { BrowserRouter as Router , Routes ,Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import appStore from './ReduxStore/appstore';
@@ -18,8 +18,9 @@ function App() {
           <ErrorBoundary>
           <Layout>
             <Routes>
-              <Route path='/' element={<HomePage />} />
-              <Route path='/aboutme' element={<AboutMe />} />
+              <Route path='/' element={<HomePage/>} />
+              <Route path='/cart' element={<Cart/>} />
+              <Route path='/aboutme' element={<AboutMe/>} />
               <Route path='/product/:id' element={<ProductDetailsDisplay />} />
               <Route path='*' element={<Error />} />
             </Routes>
