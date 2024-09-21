@@ -1,27 +1,49 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import ProductCard from './ProductCard'
-import { BarcodeSearch, Shimmer } from '../import'
+import React, { useEffect, useState, useCallback } from 'react';
+import { BarcodeSearch, Shimmer, ProductCard, CategoryFilter, SortFilter } from '../import';
 
 const HomePage = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
+    const [category, setCategory] = useState('');
+    const [sortOption, setSortOption] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    console.log(navigator.onLine)
 
-    // Fetch products based on the current page number
+    // Fetch products based on the current category and sort options
     const fetchProducts = useCallback(async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`https://world.openfoodfacts.org/products.json?lang=en&sort=popularity&page=${pageNumber}`);
+            let url = `https://world.openfoodfacts.org/products.json?lang=en&sort=popularity&page=${pageNumber}`;
+            if (category) {
+                url = `https://world.openfoodfacts.org/category/${category}.json`;
+            }
+            const response = await fetch(url);
             const data = await response.json();
-            setAllProducts(prevProducts => [...prevProducts, ...data.products]); // Append new products to the existing list
+
+            let products = data.products;
+
+            // Apply sorting locally if needed
+            if (sortOption) {
+                if (sortOption === 'name-asc') {
+                    products.sort((a, b) => a.product_name.localeCompare(b.product_name));
+                } else if (sortOption === 'name-desc') {
+                    products.sort((a, b) => b.product_name.localeCompare(a.product_name));
+                } else if (sortOption === 'grade-asc') {
+                    products.sort((a, b) => (a.nutrition_grades || 'z').localeCompare(b.nutrition_grades || 'z'));
+                } else if (sortOption === 'grade-desc') {
+                    products.sort((a, b) => (b.nutrition_grades || 'z').localeCompare(a.nutrition_grades || 'z'));
+                }
+            }
+
+            setAllProducts(prevProducts => [...prevProducts, ...products]); // Append new products to the existing list
         } catch (error) {
             console.error("Error fetching products:", error);
         }
         setIsLoading(false);
-    }, [pageNumber]);
+    }, [category, sortOption, pageNumber]);
 
-    // Fetch products initially and on page change
+    // Fetch products initially and on category/sort/page change
     useEffect(() => {
         fetchProducts();
     }, [fetchProducts]);
@@ -56,28 +78,43 @@ const HomePage = () => {
         setAllProducts(data);
     }
 
+    // Handle category change
+    const handleCategoryChange = (selectedCategory) => {
+        setCategory(selectedCategory);
+        setAllProducts([]); // Clear current products to load new ones based on the selected category
+        setPageNumber(1); // Reset page number
+    };
+
+    // Handle sort change
+    const handleSortChange = (selectedSort) => {
+        setSortOption(selectedSort);
+        setAllProducts([]); // Clear current products to apply sorting
+        setPageNumber(1); // Reset page number
+    };
+
     return (
         <>
-            <div className='flex flex-wrap'>
+            <div className="flex flex-wrap justify-between p-4 max-sm:p-1 max-md:p-2 max-md:w-1/3">
                 <input
-                    placeholder='Search products'
-                    type='text'
+                    placeholder="Search products"
+                    type="text"
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className='h-10 p-2 m-2 border border-black rounded-lg shadow-lg'
+                    className="h-10 p-2 m-2 border border-black rounded-lg shadow-lg"
                 />
                 <BarcodeSearch handleBarCodeResult={handleBarCodeResult} />
+                <CategoryFilter handleCategoryChange={handleCategoryChange} />
+                <SortFilter handleSortChange={handleSortChange} />
             </div>
 
-           {!allProducts.length ? (
+            {!allProducts.length ? (
                 <Shimmer />
             ) : (
-                <div className='flex flex-wrap'>
-                    {allProducts.map(product => (
-                        <ProductCard key={product.id} product={product} />
+                <div className="flex flex-wrap justify-between  max-md:w-1/3">
+                    {allProducts.map((product) => (
+                        <ProductCard key={product._id} product={product} />
                     ))}
                 </div>
             )}
-
 
             {isLoading && <Shimmer />} {/* Display loading shimmer when fetching new products */}
         </>
@@ -85,3 +122,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

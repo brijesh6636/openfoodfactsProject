@@ -10,8 +10,6 @@ const BarcodeSearch = ({ handleBarCodeResult }) => {
 
     const handleSearch = async () => {
         const data = await fetchProductByBarcode(barcode);
-        console.log(data);
-        console.log(typeof(data))
         if (data) handleBarCodeResult(data);
     };
 
@@ -38,7 +36,7 @@ const BarcodeSearch = ({ handleBarCodeResult }) => {
                 onChange={handleInputChange}
                 placeholder="Enter barcode"
             />
-            <button className='h-10 p-2 m-2 border border-black rounded-lg shadow-lg hover:bg-gray-400' onClick={handleSearch}>Search</button>
+            <button className='h-10 p-2 m-2 border border-black rounded-lg shadow-lg bg-gray-500 hover:bg-gray-800 hover:text-white' onClick={handleSearch}>Search</button>
         </div>
     );
 };

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 export default function AboutMe() {
    const GithubApi ='https://api.github.com/users/bsingh6636'
-//    const username = 'bsingh6636'
+
   
     const [githubData, setGithubData] = useState({});
     const [gitRepos, setGitRepos] = useState([]);
