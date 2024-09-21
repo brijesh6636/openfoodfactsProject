@@ -105,7 +105,6 @@ const HomePage = () => {
         clearSessionData('products'); // Clear session data on sort change
         setPageNumber(1); // Reset page number
     };
-    console.log(searchQuery)
     return (
         <>
             <div className="flex flex-wrap justify-between p-4 max-sm:p-1 max-md:p-2 max-md:w-1/3">
@@ -124,8 +123,8 @@ const HomePage = () => {
                 <Shimmer />
             ) : (
                 <div className="flex flex-wrap justify-between  ">
-                    {allProducts.map((product) => (
-                        <ProductCard key={product._id} product={product} />
+                    {allProducts.map((product , index) => (
+                        <ProductCard key={index} product={product} />
                     ))}
                 </div>
             )}

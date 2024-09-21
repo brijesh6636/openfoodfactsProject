@@ -5,12 +5,14 @@ import { AboutMe, Cart, Error, ErrorBoundary, Header, HomePage, NoInternetConnec
 import { BrowserRouter as Router , Routes ,Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import appStore from './ReduxStore/appstore';
+import { Footer } from './components/Footer';
 
 
 export const Context = createContext();
 
 function App() {
   const [isOnline , setIsOnline] = useState(true)
+    sessionStorage.clear(); // This clears all session storage items
   return (
     <Router>
 
@@ -54,8 +56,11 @@ const Layout = ({ children }) => {
     return () => {
       window.removeEventListener('online', updateOnlineStatus);
       window.removeEventListener('offline', updateOnlineStatus);
+      sessionStorage.clear();
     };
   }, [setIsOnline]);
+
+  
 
   return (
     <div
@@ -66,12 +71,11 @@ const Layout = ({ children }) => {
     >
       <Header className="shadow-md z-10" />
       <div className="flex flex-row flex-1">
-        {/* Uncomment if you have a Sidebar */}
-        {/* <Sidebar className="shadow-lg bg-white min-w-[240px] w-64 p-6" /> */}
         <main className="flex-1 p-4 shadow-md rounded-lg">
           {isOnline ? children : <NoInternetConnection />}
         </main>
       </div>
+      <Footer/>
     </div>
   );
 };

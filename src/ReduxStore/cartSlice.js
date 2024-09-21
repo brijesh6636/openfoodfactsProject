@@ -1,26 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialCartItems = JSON.parse(localStorage.getItem("cart")) || [];
-// const initialCartItems = [] 
+
+// Safely retrieve and parse the cart from localStorage
+const cartData = localStorage.getItem("cart");
+const initialCartItems = cartData ? JSON.parse(cartData) : []; 
+
 const cartSlice = createSlice({
   name: "Cart",
   initialState: {
-    items:  initialCartItems,
+    items: initialCartItems,
   },
   reducers: {
     addItem: (state, action) => {
-      state.items = [...state.items , action.payload]
-      //chaniging the statte
+      state.items.push(action.payload);
+      localStorage.setItem("cart", JSON.stringify(state.items)); // Update localStorage
     },
     removeItem: (state, action) => {
       state.items = state.items.filter(cartItem => {
- 
         return cartItem.card.info.id !== action.payload.items.card.info.id;
       });
-  
+      localStorage.setItem("cart", JSON.stringify(state.items)); // Update localStorage
     },
-    clearItem: (state, action) => {
-      state.items.length = [];
-      localStorage.setItem('cart', JSON.stringify([]));
+    clearItem: (state) => {
+      state.items = [];
+      localStorage.setItem('cart', JSON.stringify([])); // Clear localStorage
     },
   },
 });
