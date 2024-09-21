@@ -18,7 +18,8 @@ import CategoryFilter from "./pages/CategoryFilter";
 import SortFilter from "./pages/SortFilter";
 import { ShimmerLoader } from "./pages/ProductShimeer";
 import { NoProductFound } from "./pages/ProductShimeer";
+import CartItem from "./pages/CartItem";
 
 
 export  { HomePage , ProductCard , BarcodeSearch , ProductDetailsDisplay , NoInternetConnection , Cart
-    , Header , ErrorBoundary , Error , AboutMe , Shimmer , CategoryFilter , SortFilter , NoProductFound , ShimmerLoader  };
+    , Header , ErrorBoundary , Error , AboutMe , Shimmer , CategoryFilter , SortFilter , NoProductFound , ShimmerLoader , CartItem  };
