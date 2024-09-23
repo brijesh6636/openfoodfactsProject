@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
       {/* Product Image */}
       <img
         src={product.image_url || 'https://world.openfoodfacts.org/images/icons/dist/packaging.svg'}
-        alt="Product Image"
+        alt={product.product_name}
         className="w-full h-40 sm:h-44 md:h-48 lg:h-52 object-contain rounded-t-lg rounded-2xl bg-white  mb-4 transition-transform duration-300 transform hover:scale-110"
       />
 

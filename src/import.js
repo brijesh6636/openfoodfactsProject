@@ -1,4 +1,6 @@
+//import.js
 
+import { lazy } from "react";
 //imports from component
 import Header from "./components/Header";
 import { ErrorBoundary } from "./components/ErrorBoundary";
@@ -11,15 +13,18 @@ import Cart from "./components/Cart";
 
 //import from pages
 
-import Error from "./pages/Error";
-import AboutMe from "./pages/AboutMe";
+
 import { Shimmer } from "./pages/Shimmer";
 import CategoryFilter from "./pages/CategoryFilter";
 import SortFilter from "./pages/SortFilter";
 import { ShimmerLoader } from "./pages/ProductShimeer";
 import { NoProductFound } from "./pages/ProductShimeer";
-import CartItem from "./pages/CartItem";
+const Error = lazy(() => import("./pages/Error"))
+const CartItem = lazy(() => import("./pages/CartItem"))
+const AboutMe = lazy(() => import("./pages/AboutMe"));
 
 
-export  { HomePage , ProductCard , BarcodeSearch , ProductDetailsDisplay , NoInternetConnection , Cart
-    , Header , ErrorBoundary , Error , AboutMe , Shimmer , CategoryFilter , SortFilter , NoProductFound , ShimmerLoader , CartItem  };
+export {
+    HomePage, ProductCard, BarcodeSearch, ProductDetailsDisplay, NoInternetConnection, Cart
+    , Header, ErrorBoundary, Error, AboutMe, Shimmer, CategoryFilter, SortFilter, NoProductFound, ShimmerLoader, CartItem
+};

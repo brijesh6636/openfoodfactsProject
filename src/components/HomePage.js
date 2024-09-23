@@ -51,11 +51,13 @@ const HomePage = () => {
             console.error("Error fetching products:", error);
         }
         setIsLoading(false);
+         // eslint-disable-next-line
     }, [category, sortOption, pageNumber]);
 
     // Fetch products initially and on category/sort/page change
     useEffect(() => {
         fetchProducts();
+       
     }, [fetchProducts]);
 
     // Handle search query
@@ -69,6 +71,7 @@ const HomePage = () => {
             }
             handleQuery();
         }
+        
     }, [searchQuery]);
 
     // Infinite scroll handler

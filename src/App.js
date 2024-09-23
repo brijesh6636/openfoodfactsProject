@@ -6,13 +6,15 @@ import { BrowserRouter as Router , Routes ,Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import appStore from './ReduxStore/appstore';
 import { Footer } from './components/Footer';
+import { Suspense } from 'react';
+
 
 
 export const Context = createContext();
 
 function App() {
   const [isOnline , setIsOnline] = useState(true)
-    sessionStorage.clear(); // This clears all session storage items
+   
   return (
     <Router>
 
@@ -20,6 +22,7 @@ function App() {
         <Provider store={appStore}>
           <ErrorBoundary>
           <Layout>
+          <Suspense fallback={<div>Loading...</div>}>
             <Routes>
               <Route path='/' element={<HomePage/>} />
               <Route path='/cart' element={<Cart/>} />
@@ -27,6 +30,7 @@ function App() {
               <Route path='/product/:id' element={<ProductDetailsDisplay />} />
               <Route path='*' element={<Error />} />
             </Routes>
+            </Suspense>
             </Layout>
           </ErrorBoundary>
           </Provider>
